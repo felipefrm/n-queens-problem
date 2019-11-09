@@ -1,14 +1,18 @@
 from igraph import*
 
-def bronKerbosh(CliqueMax, g, r, p, x):
+def bronKerbosh(cliqueMax, g, r, p, x):
 
     if len(p) == 0 and len(x) == 0:
         cliqueMax.append(r)
         return
 
+    # print(p)
+    # print(x)
+    # print(g.maxdegree(list(set().union(p, x))))
     u = g.maxdegree(list(set().union(p, x)))
 
-    for v in list(set(b) - set(g.neighbors(u))):
-        bronKerbosh(CliqueMax, g, list(set().union(r, v)), list(set(p) & set(g.neighbors(v))), list(set(x) & set(neighbors(v))))
+    for v in list(set(p) - set(g.neighbors(u))):
+        r.append(v)
+        bronKerbosh(cliqueMax, g, r, list(set(p) & set(g.neighbors(v))), list(set(x) & set(g.neighbors(v))))
         p = list(set(p) - set(g.neighbors(v)))
-        x = list(set().union(x, v))
+        x.append(v)
