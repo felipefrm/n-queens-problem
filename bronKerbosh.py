@@ -3,9 +3,9 @@ from igraph import*
 def bronKerbosh(cliqueMax, g, r, p, x):
 
     if len(p) == 0 and len(x) == 0:
-        # if len(r) == 8:
+        if len(r) == 8:
         # print("achei clique maxima")
-        cliqueMax.append(r)
+            cliqueMax.append(r)
         return
 
     # print("P u X: {}".format(list(set().union(p, x))))
@@ -30,5 +30,4 @@ def escolheVertice(g, vertices):
     for v in vertices:
         grau.append(g.degree(v))
 
-    v = vertices[grau.index(max(grau))]
-    return v
+    return vertices[grau.index(max(grau))]
