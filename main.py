@@ -20,7 +20,7 @@ g.add_vertices(n*n)
 
 for i in range(n*n):
     for j in range(n*n):
-        if i != j and ((j-i) % n == 0 or (j-i) % (n+1) == 0 or (j-i) % (n-1) == 0 or i//n == j//n):
+        if i != j and ((j-i) % n == 0 or ((j-i) % (n+1) == 0 and abs(i//n - j//n)*(n+1)+i == j) or ((j-i) % (n-1) == 0 and abs(i//n - j//n)*(n-1)+i == j) or i//n == j//n):
             g.add_edge(g.vs[i].index, g.vs[j].index)
 
 # plot(g)
