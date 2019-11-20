@@ -1,11 +1,11 @@
 from igraph import*
 
-def bronKerbosh(cliqueMax, g, r, p, x):
+def bronKerbosh(n, cliqueMax, g, r, p, x):
 
     if len(p) == 0 and len(x) == 0:
-        if len(r) == 8:
-        # print("achei clique maxima")
+        if len(r) == n:
             cliqueMax.append(r)
+        # print("achei clique maxima")
         return
 
     # print("P u X: {}".format(list(set().union(p, x))))
@@ -18,7 +18,7 @@ def bronKerbosh(cliqueMax, g, r, p, x):
     for v in list(set(p) - set(g.neighbors(u))):
         # print("v: {}".format(v))
         # print("r = {} p = {} x = {}".format(r + [v], list(set(p) & set(g.neighbors(v))), list(set(x) & set(g.neighbors(v)))))
-        bronKerbosh(cliqueMax, g, r + [v], list(set(p) & set(g.neighbors(v))), list(set(x) & set(g.neighbors(v))))
+        bronKerbosh(n, cliqueMax, g, r + [v], list(set(p) & set(g.neighbors(v))), list(set(x) & set(g.neighbors(v))))
         # print("p = {} - {}".format(list(set(p)), list(set(g.neighbors(v)))))
         p.remove(v)
         x.append(v)
