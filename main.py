@@ -13,6 +13,25 @@ for i in range(n*n):
             g.add_edge(g.vs[i].index, g.vs[j].index)
 
 cliqueMax = []
+plot(g)
 bronKerbosh(n, cliqueMax, g.simplify().complementer().simplify(), list(), list(g.vs.indices), list())
-print("{} soluções distintas para o problema das {} rainhas foram encontradas.".format(len(cliqueMax), n))
-# print(cliqueMax)
+
+print("\n{} soluções distintas para o problema das {} rainhas foram encontradas.".format(len(cliqueMax), n))
+
+while (True):
+    try:
+        op = input('\n[0] Fechar programa\n[1] Listar todas as soluções encontradas\n>>> ')
+    except NameError:
+        print("\nDigite uma das opções acima.")
+    else:
+        if op == 1:
+            for clique in cliqueMax:
+                print("{}. {}".format(cliqueMax.index(clique)+1, clique))
+            break
+
+        elif op == 0:
+            print("\nPrograma finalizado.")
+            break
+
+        else:
+            print("\nDigite uma das opções acima.")
