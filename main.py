@@ -2,8 +2,16 @@
 from igraph import *
 from bronKerbosh import bronKerbosh
 import sys
+import time
 
-n = int(sys.argv[1])
+start_time = time.time()
+
+if len(sys.argv) <= 1:
+    print("Não foi inserido o argumento referente ao tamanho de n.\nValor default n = 8.")
+    n = 8
+else:
+    n = int(sys.argv[1])
+
 g = Graph()
 g.add_vertices(n*n)
 
@@ -15,47 +23,49 @@ for i in range(n*n):
 cliqueMax = []
 bronKerbosh(n, cliqueMax, g.simplify().complementer().simplify(), list(), list(g.vs.indices), list())
 
-tab = [[x for x in range(n)] for y in range(n)]
-
-# print(tab)
+print("- Tempo gasto para modelar o grafo e aplicar o BronKerbosh %ss  -" % (time.time() - start_time))
 print("\n{} soluções distintas para o problema das {} rainhas foram encontradas.".format(len(cliqueMax), n))
 
-while (True):
-    try:
-        op = int(input('\n[0] Fechar programa\n[1] Listar todas as soluções encontradas\n>>> '))
-    except NameError:
-        print("\nDigite uma das opções acima.")
-    else:
-        if op == 1:
-            for clique in cliqueMax:
-                print("{}. {}".format(cliqueMax.index(clique), clique))
+tab = [[x for x in range(n)] for y in range(n)]
 
-            op = int(input("\nDeseja ver alguma destas soluções no tabuleiro?\n[0] Não, fechar programa \n[1] Sim\n>>> "))
+while True:
 
-            if op == 0:
-                break
+    op = int(input('\n[0] Fechar programa\n[1] Listar todas as soluções encontradas\n>>> '))
 
-            else:
-                op = int(input("\nQual solução? 0 a {}: ".format(len(cliqueMax))))
-                for i in range(n):
-                    for j in range(n):
-                        if i+j*n in cliqueMax[op]:
-                            tab[i][j] = '♛'
-                        else:
-                            tab[i][j] = '○'
+    if op == 1:
+        for clique in cliqueMax:
+            print("{}. {}".format(cliqueMax.index(clique), clique))
 
-            print("")
-            for i in range(n):
-                for j in range(n):
-                    print("{} ".format(tab[i][j])),
-                print("")
-            print("")
-            break
+        op = int(input("\nDeseja ver algumas destas soluções no tabuleiro?\n[0] Não, fechar programa \n[1] Sim\n>>> "))
 
-
-        elif op == 0:
+        if op == 0:
             print("\nPrograma finalizado.")
             break
 
         else:
-            print("\nDigite uma das opções acima.")
+            while (True):
+                op = int(input("\nQual solução? (0 a {}) [Digite -1 para sair]\n>>> ".format(len(cliqueMax)-1)))
+                if op == -1:
+                    break
+                for i in range(n):
+                    for j in range(n):
+                        if j+i*n in cliqueMax[op]:
+                            tab[i][j] = '♛'
+                        else:
+                            tab[i][j] = '○'
+                print("")
+
+                tab[::-1]
+                for i in range(n):
+                    for j in range(n):
+                        print("{} ".format(tab[i][j])),
+                    print("")
+            print("\nPrograma finalizado.")
+            break
+
+    elif op == 0:
+        print("\nPrograma finalizado.")
+        break
+
+    else:
+        print("\nDigite uma das opções acima.")
