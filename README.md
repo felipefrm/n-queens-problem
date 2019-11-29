@@ -1,4 +1,4 @@
-# n-Queens Problem
+# n-Queens Problem (graph implementation)
 
 Execute o programa com:
 ```
